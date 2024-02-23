@@ -1,7 +1,42 @@
 #include <stdio.h>
 
+
 int search(int numbers[], int low, int high, int value) 
 {
+	//Student: Evion De La Rosa
+	if(low == high)//Checks if there is only one item to search
+	{
+		//Checks if the item is equal to the value
+		if(numbers[low] == value)
+			return low;//Returns the index if the item is equal to the value
+	}
+	else if(low > high)//A case where the value is not found
+	{
+		return -1;
+	}
+	else//Regular Case
+	{
+		//Finds the middle index between low and high
+		int mid = (low + high)/2;
+
+		//Checks what the number at the mid is in relation to value
+		if(numbers[mid] == value)//If the mid number = value then return index
+		{
+			return mid;
+		}
+		else if(numbers[mid] > value)//If the mid number > value then call search with index now as high index
+		{
+			int recursiveIndex = search(numbers, low, mid - 1, value);//Searchers the left half
+			return recursiveIndex;
+		}
+		else if(numbers[mid] < value)//If the mid number < value then call search with index now as low index
+		{
+			int recursiveIndex = search(numbers, mid + 1, high, value);// Searches the right half
+			return recursiveIndex;
+		}
+	}
+
+	//If the function gets to this point, then the value is not in the list
 	return -1;
 }
 
@@ -32,7 +67,7 @@ int main(void)
 	while (numInputs-- > 0)
 	{
 		fscanf(inFile, " %d\n", &countOfNums);
-		numArray = (int *) malloc(countOfNums * sizeof(int));
+		numArray = (int *)malloc(countOfNums * sizeof(int));
 		average = 0;
 		for (i = 0; i < countOfNums; i++)
 		{
